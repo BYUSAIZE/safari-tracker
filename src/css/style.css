@@ -341,3 +341,30 @@ footer {
   cursor: pointer;
   font-weight: bold;
 }
+
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+}
+
+.search-form input {
+  padding: 0.4em;
+  border: 1px solid var(--light-grey);
+  border-radius: 4px;
+}
+
+.search-form button {
+  padding: 0.4em 0.75em;
+  margin: 0;
+  font-size: 1em;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}

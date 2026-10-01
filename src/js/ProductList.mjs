@@ -15,21 +15,27 @@ function productCardTemplate(product) {
 }
 
 export default class ProductList {
-  constructor(category, dataSource, listElement) {
+  constructor(category, dataSource, listElement, isSearch = false) {
     this.category = category;
     this.dataSource = dataSource;
     this.listElement = listElement;
+    this.isSearch = isSearch;
     this.list = [];
   }
 
   async init() {
-    const list = await this.dataSource.getData(this.category);
+    const list = this.isSearch
+      ? await this.dataSource.searchProducts(this.category)
+      : await this.dataSource.getData(this.category);
     this.list = list;
     this.renderList(this.list);
 
     const title = document.querySelector('.title');
-    if (title)
-      title.textContent = `Top Products: ${formatCategory(this.category)}`;
+    if (title) {
+      title.textContent = this.isSearch
+        ? `Search Results: "${this.category}"`
+        : `Top Products: ${formatCategory(this.category)}`;
+    }
   }
 
   renderList(list) {
