@@ -28,7 +28,10 @@ export default class ProductList {
       ? await this.dataSource.searchProducts(this.category)
       : await this.dataSource.getData(this.category);
     this.list = list;
-    this.renderList(this.list);
+
+    // Sort once on load, using whatever the dropdown currently shows
+    const sortSelect = document.querySelector('#sortBy');
+    this.sortList(sortSelect ? sortSelect.value : 'name');
 
     const title = document.querySelector('.title');
     if (title) {
@@ -49,8 +52,11 @@ export default class ProductList {
   }
 
   sortList(sortBy) {
+    // Sort by the title shown on the card, not the brand-prefixed Name
+    const title = (p) => p.NameWithoutBrand || p.Name;
+
     if (sortBy === 'name') {
-      this.list.sort((a, b) => a.Name.localeCompare(b.Name));
+      this.list.sort((a, b) => title(a).localeCompare(title(b)));
     } else if (sortBy === 'price') {
       this.list.sort((a, b) => a.FinalPrice - b.FinalPrice);
     }
