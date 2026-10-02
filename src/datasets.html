@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W05 Dataset Activity</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        #items li {
+            padding: 10px;
+            margin: 6px 0;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 220px;
+            list-style-type: none;
+            transition: transform 0.2s;
+        }
+
+        #items li:hover {
+            transform: scale(1.02);
+        }
+
+        /* Style items based on their data-category attribute */
+        li[data-category="fruit"] {
+            background-color: lightyellow;
+        }
+
+        li[data-category="vegetable"] {
+            background-color: lightgreen;
+        }
+
+        li[data-category="dairy"] {
+            background-color: lightblue;
+        }
+
+        /* Styling for the details container */
+        #details {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            width: 260px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Product List</h1>
+    
+    <!-- List with custom data-* attributes -->
+    <ul id="items">
+        <li data-name="Banana" data-category="fruit" data-color="yellow">Banana</li>
+        <li data-name="Carrot" data-category="vegetable" data-color="orange">Carrot</li>
+        <li data-name="Blueberry" data-category="fruit" data-color="blue">Blueberry</li>
+    </ul>
+
+    <!-- Container for dynamic details -->
+    <div id="details">
+        <h2>Item Details</h2>
+        <p>Click an item above to view its attributes.</p>
+    </div>
+
+    <script>
+        // 1. Select all list items
+        const items = document.querySelectorAll('#items li');
+        const detailsContainer = document.querySelector('#details');
+
+        // 2. Loop through each list item and log its dataset properties
+        items.forEach(item => {
+            console.log('--- Item ---');
+            console.log('Name:', item.dataset.name);
+            console.log('Category:', item.dataset.category);
+            console.log('Color:', item.dataset.color);
+
+            // 3. Add a click event listener to display details interactively
+            item.addEventListener('click', () => {
+                detailsContainer.innerHTML = `
+                    <h2>Item Details</h2>
+                    <p><strong>Name:</strong> ${item.dataset.name}</p>
+                    <p><strong>Category:</strong> ${item.dataset.category}</p>
+                    <p><strong>Color:</strong> ${item.dataset.color}</p>
+                `;
+            });
+        });
+    </script>
+
+</body>
+</html>
