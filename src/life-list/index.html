@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SafariTracker | My Life List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Montserrat:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      :root {
+        --font-body: "Lora", Georgia, serif;
+        --font-headline: "Montserrat", Arial, sans-serif;
+        --primary-color: #c86d33;
+        --secondary-color: #2c4a3e;
+        --tertiary-color: #c86d33;
+        --sand: #d8c5a5;
+        --light-grey: #d8c5a5;
+        --dark-grey: #222222;
+      }
+      h1, h2, h3, button, .logo { font-family: var(--font-headline); }
+      .life-intro { padding: 1rem; }
+      .life-bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 1rem;
+        background-color: var(--sand);
+      }
+      .life-bar select { padding: 0.5rem; font: inherit; border: 1px solid var(--secondary-color); border-radius: 4px; }
+      #life-progress { font-family: var(--font-headline); font-weight: 700; color: var(--secondary-color); }
+      .life-list { list-style: none; padding: 1rem; max-width: 40rem; margin: auto; }
+      .life-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem;
+        border-bottom: 1px solid var(--sand);
+      }
+      .life-item label { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
+      .life-item input { width: 1.4rem; height: 1.4rem; accent-color: var(--secondary-color); }
+      .life-item__icon { font-size: 1.6rem; }
+      .life-item__name { font-weight: 600; }
+      .life-item--spotted .life-item__name { color: var(--secondary-color); }
+      .life-item__date { font-size: var(--small-font); color: var(--tertiary-color); }
+      .life-empty { padding: 2rem; text-align: center; }
+    </style>
+    <script type="module" src="/js/life-list.js"></script>
+  </head>
+  <body>
+    <header class="divider" id="main-header"></header>
+    <main>
+      <section class="life-intro">
+        <h1>My Life List</h1>
+        <p>Tick each animal you spot on a game drive. Your list is saved on this device.</p>
+      </section>
+      <div class="life-bar">
+        <p id="life-progress" aria-live="polite">Loading...</p>
+        <label for="life-filter" class="visually-hidden">Show</label>
+        <select id="life-filter">
+          <option value="all">All animals</option>
+          <option value="spotted">Spotted</option>
+          <option value="missing">Not yet spotted</option>
+        </select>
+      </div>
+      <ul class="life-list" id="life-list-items"></ul>
+    </main>
+    <footer id="main-footer"></footer>
+  </body>
+</html>
