@@ -3,25 +3,76 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sleep Outside | Products</title>
+    <title>SafariTracker | Species Field Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Montserrat:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      :root {
+        --font-body: "Lora", Georgia, serif;
+        --font-headline: "Montserrat", Arial, sans-serif;
+        --primary-color: #c86d33;
+        --secondary-color: #2c4a3e;
+        --tertiary-color: #c86d33;
+        --sand: #d8c5a5;
+        --light-grey: #d8c5a5;
+        --dark-grey: #222222;
+      }
+      h1, h2, h3, button, .logo { font-family: var(--font-headline); }
+      .species-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        padding: 1rem;
+        background-color: var(--sand);
+      }
+      .species-controls label { display: flex; flex-direction: column; font-size: var(--small-font); gap: 0.25rem; }
+      .species-controls input,
+      .species-controls select { padding: 0.5rem; font: inherit; border: 1px solid var(--secondary-color); border-radius: 4px; min-width: 11rem; }
+      .species-card__icon { font-size: 2.5rem; text-align: center; }
+      .species-badge { display: inline-block; padding: 0.15em 0.6em; border-radius: 4px; background: var(--sand); font-size: var(--small-font); font-weight: 700; }
+      .species-badge[data-status="Critically Endangered"] { background: #8b1e1e; color: #fff; }
+      .species-badge[data-status="Endangered"] { background: #c86d33; color: #fff; }
+      .species-badge[data-status="Vulnerable"] { background: #e3b04b; }
+      .species-badge[data-status="Least Concern"] { background: #2c4a3e; color: #fff; }
+      .species-empty { padding: 2rem; text-align: center; }
+      .product-list-status { padding: 0.75rem 1rem 0; }
+    </style>
     <script type="module" src="/js/product-listing.js"></script>
   </head>
   <body>
     <header class="divider" id="main-header"></header>
-    <main class="divider">
+    <main>
       <section class="products">
-        <h1 class="title">Top Products</h1>
-        <div class="sort-container">
-          <label for="sortBy">Sort by: </label>
-          <select id="sortBy">
-            <option value="name">Name (A-Z)</option>
-            <option value="price">Price (Low to High)</option>
-          </select>
-        </div>
-        <p class="product-list-status" role="status">Loading products…</p>
-        <ul class="product-list"></ul>
+        <h1 id="list-title">All Wildlife</h1>
       </section>
+      <form class="species-controls" role="search" onsubmit="return false">
+        <label for="species-search">Search animals
+          <input id="species-search" type="search" placeholder="e.g. lion, wetland" />
+        </label>
+        <label for="status-filter">Conservation status
+          <select id="status-filter">
+            <option value="all">All</option>
+            <option>Critically Endangered</option>
+            <option>Endangered</option>
+            <option>Vulnerable</option>
+            <option>Near Threatened</option>
+            <option>Least Concern</option>
+          </select>
+        </label>
+        <label for="sortBy">Sort by
+          <select id="sortBy">
+            <option value="name">Name (A to Z)</option>
+            <option value="status">Most threatened first</option>
+          </select>
+        </label>
+      </form>
+      <p class="product-list-status" aria-live="polite"></p>
+      <ul class="product-list"></ul>
     </main>
     <footer id="main-footer"></footer>
   </body>

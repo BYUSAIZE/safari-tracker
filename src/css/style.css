@@ -1,23 +1,18 @@
 :root {
-  --font-body: Arial, Helvetica, sans-serif;
-  --font-headline: Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  --font-body: "Lora", Georgia, serif;
+  --font-headline: "Montserrat", Arial, sans-serif;
   /* colors */
-  --primary-color: #f0a868;
-  --secondary-color: #525b0f;
-  --tertiary-color: #8a470c;
-  --light-grey: #d0d0d0;
-  --dark-grey: #303030;
+  --primary-color: #c86d33;
+  --secondary-color: #2c4a3e;
+  --tertiary-color: #c86d33;
+  --sand: #d8c5a5;
+  --light-grey: #d8c5a5;
+  --dark-grey: #222222;
 
   /* sizes */
   --font-base: 18px;
   --small-font: 0.8em;
   --large-font: 1.2em;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 }
 
 body {
@@ -367,4 +362,12 @@ footer {
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
+}
+h1, h2, h3, .logo, button {
+  font-family: var(--font-headline);
+}
+
+.mission {
+  background-color: var(--secondary-color);
+  color: var(--sand);
 }

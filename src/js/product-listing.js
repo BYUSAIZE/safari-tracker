@@ -1,48 +1,45 @@
-import ExternalServices from './Externalservices.mjs';
-import ProductList from './ProductList.mjs';
+import SpeciesService from './SpeciesService.mjs';
+import SpeciesList from './SpeciesList.mjs';
 import { getParam, loadHeaderFooter } from './utils.mjs';
 
 loadHeaderFooter();
 
-const validCategories = ['tents', 'backpacks', 'sleeping-bags', 'hammocks'];
-const requestedCategory = getParam('category');
-const searchTerm = getParam('search');
+const titles = {
+  all: 'All Wildlife',
+  'big-five': 'The Big Five',
+  predators: 'Predators',
+  birds: 'Birds',
+  'plains-game': 'Plains Game',
+};
 
-const dataSource = new ExternalServices();
+const requestedCategory = getParam('category');
+const category = titles[requestedCategory] ? requestedCategory : 'all';
+const searchTerm = getParam('search') || '';
+
 const listElement = document.querySelector('.product-list');
 const statusElement = document.querySelector('.product-list-status');
+const searchInput = document.getElementById('species-search');
+const statusFilter = document.getElementById('status-filter');
+const sortSelect = document.getElementById('sortBy');
 
-let productList;
+document.getElementById('list-title').textContent = titles[category];
+searchInput.value = searchTerm;
 
-if (searchTerm) {
-  productList = new ProductList(searchTerm, dataSource, listElement, true);
-} else {
-  const category = validCategories.includes(requestedCategory)
-    ? requestedCategory
-    : 'tents';
-  productList = new ProductList(category, dataSource, listElement, false);
-}
+const speciesList = new SpeciesList(new SpeciesService(), listElement);
 
-async function initProductList() {
-  try {
-    await productList.init();
-    if (statusElement) {
-      statusElement.textContent = '';
-    }
-  } catch (error) {
-    if (statusElement) {
-      statusElement.textContent =
-        'Products could not be loaded. Please try again later.';
-      statusElement.title = error.message;
-    }
-  }
-}
-
-initProductList();
-
-document.getElementById('sortBy')?.addEventListener('change', (e) => {
-  productList.sortList(e.target.value);
+document.addEventListener('species-rendered', (event) => {
+  statusElement.textContent = `${event.detail} animal${event.detail === 1 ? '' : 's'} shown`;
 });
+
+speciesList.init(category, searchTerm).catch((error) => {
+  statusElement.textContent =
+    'Species could not be loaded. Please try again later.';
+  statusElement.title = error.message;
+});
+
+searchInput.addEventListener('input', (e) => speciesList.setQuery(e.target.value));
+statusFilter.addEventListener('change', (e) => speciesList.setStatus(e.target.value));
+sortSelect.addEventListener('change', (e) => speciesList.setSort(e.target.value));
 
 document.querySelector('.search-form')?.addEventListener('submit', (event) => {
   event.preventDefault();
